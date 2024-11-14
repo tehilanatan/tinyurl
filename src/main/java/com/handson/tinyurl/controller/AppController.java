@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,8 @@ public class AppController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private UserClickRepository userClickRepository;
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User createUser(@RequestParam String name) {
         User user = anUser().withName(name).build();
@@ -103,8 +106,7 @@ public class AppController {
     }
 
 
-    @Autowired
-    private UserClickRepository userClickRepository;
+
 
     @RequestMapping(value = "/user/{name}/clicks", method = RequestMethod.GET)
     public List<UserClickOut> getUserClicks(@RequestParam String name) {
@@ -113,7 +115,6 @@ public class AppController {
                 .collect(Collectors.toList());
         return userClicks;
     }
-
 
 
 
